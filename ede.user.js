@@ -1,17 +1,5 @@
-// ==UserScript==
-// @name         Emby danmaku extension
-// @description  Emby弹幕插件
-// @namespace    https://github.com/RyoLee
-// @author       RyoLee
-// @version      1.10
-// @copyright    2022, RyoLee (https://github.com/RyoLee)
-// @license      MIT; https://raw.githubusercontent.com/RyoLee/emby-danmaku/master/LICENSE
-// @icon         https://github.githubassets.com/pinned-octocat.svg
-// @updateURL    https://cdn.jsdelivr.net/gh/RyoLee/emby-danmaku@gh-pages/ede.user.js
-// @downloadURL  https://cdn.jsdelivr.net/gh/RyoLee/emby-danmaku@gh-pages/ede.user.js
-// @grant        none
-// @match        */web/index.html
-// ==/UserScript==
+// 2022, RyoLee (https://github.com/RyoLee)
+
 
 (async function () {
     'use strict';
