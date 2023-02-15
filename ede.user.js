@@ -1,6 +1,3 @@
-// 2022, RyoLee (https://github.com/RyoLee)
-
-
 (async function () {
     'use strict';
     if (document.querySelector('meta[name="application-name"]').content == 'Emby') {
