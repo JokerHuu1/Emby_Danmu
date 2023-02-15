@@ -1,18 +1,3 @@
-// ==UserScript==
-// @name         Emby danmaku extension
-// @description  Emby弹幕插件
-// @namespace    https://github.com/RyoLee
-// @author       RyoLee
-// @version      1.10
-// @copyright    2022, RyoLee (https://github.com/RyoLee)
-// @license      MIT; https://raw.githubusercontent.com/RyoLee/emby-danmaku/master/LICENSE
-// @icon         https://github.githubassets.com/pinned-octocat.svg
-// @updateURL    https://cdn.jsdelivr.net/gh/RyoLee/emby-danmaku@gh-pages/ede.user.js
-// @downloadURL  https://cdn.jsdelivr.net/gh/RyoLee/emby-danmaku@gh-pages/ede.user.js
-// @grant        none
-// @match        */web/index.html
-// ==/UserScript==
-
 (async function () {
     'use strict';
     if (document.querySelector('meta[name="application-name"]').content == 'Emby') {
@@ -499,7 +484,7 @@
                     const mode = { 6: 'ltr', 1: 'rtl', 5: 'top', 4: 'bottom' }[values[1]];
                     if (!mode) return null;
                     //const fontSize = Number(values[2]) || 25
-                    const fontSize = Math.round((window.screen.height > window.screen.width ? window.screen.width : window.screen.height / 1080) * 18);
+                    const fontSize = Math.round((window.screen.height > window.screen.width ? window.screen.width : window.screen.height / 1080) * 26);
                     const color = `000000${Number(values[2]).toString(16)}`.slice(-6);
                     return {
                         text: $comment.m,
@@ -514,7 +499,7 @@
                             font: `${fontSize}px sans-serif`,
                             fillStyle: `#${color}`,
                             strokeStyle: color === '000000' ? '#fff' : '#000',
-                            lineWidth: 2.0,
+                            lineWidth: 2.3,
                         },
                     };
                 })
