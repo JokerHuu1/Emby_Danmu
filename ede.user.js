@@ -1,3 +1,18 @@
+// ==UserScript==
+// @name         Emby danmaku extension
+// @description  Emby弹幕插件
+// @namespace    https://github.com/RyoLee
+// @author       RyoLee
+// @version      1.10
+// @copyright    2022, RyoLee (https://github.com/RyoLee)
+// @license      MIT; https://raw.githubusercontent.com/RyoLee/emby-danmaku/master/LICENSE
+// @icon         https://github.githubassets.com/pinned-octocat.svg
+// @updateURL    https://cdn.jsdelivr.net/gh/RyoLee/emby-danmaku@gh-pages/ede.user.js
+// @downloadURL  https://cdn.jsdelivr.net/gh/RyoLee/emby-danmaku@gh-pages/ede.user.js
+// @grant        none
+// @match        */web/index.html
+// ==/UserScript==
+
 (async function () {
     'use strict';
     if (document.querySelector('meta[name="application-name"]').content == 'Emby') {
@@ -189,7 +204,7 @@
             }
             console.log('正在初始化UI');
             // 弹幕按钮容器div
-            let parent = uiAnchor[0].parentNode.parentNode;
+            let parent = uiAnchor[0].parentNode.parentNode.parentNode;
             let menubar = document.createElement('div');
             menubar.id = 'danmakuCtr';
             if (!window.ede.episode_info) {
@@ -293,7 +308,14 @@
             if (is_auto) {
                 searchUrl += '&episode=' + episode;
             }
-            let animaInfo = await fetch(searchUrl)
+            let animaInfo = await fetch(searchUrl, {
+                method: 'GET',
+                headers: {
+                    'Accept-Encoding': 'gzip',
+                    Accept: 'application/json',
+                    'User-Agent': navigator.userAgent,
+                },
+            })
                 .then((response) => response.json())
                 .catch((error) => {
                     console.log('查询失败:', error);
@@ -334,7 +356,14 @@
 
         function getComments(episodeId) {
             let url = 'https://api.xn--7ovq92diups1e.com/cors/https://api.dandanplay.net/api/v2/comment/' + episodeId + '?withRelated=true&chConvert=' + window.ede.chConvert;
-            return fetch(url)
+            return fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Accept-Encoding': 'gzip',
+                    Accept: 'application/json',
+                    'User-Agent': navigator.userAgent,
+                },
+            })
                 .then((response) => response.json())
                 .then((data) => {
                     console.log('弹幕下载成功: ' + data.comments.length);
@@ -368,7 +397,7 @@
                 container: _container,
                 media: _media,
                 comments: _comments,
-                engine: 'DOM',
+                engine: 'canvas',
             });
             window.ede.danmakuSwitch == 1 ? window.ede.danmaku.show() : window.ede.danmaku.hide();
             if (window.ede.ob) {
@@ -470,7 +499,7 @@
                     const mode = { 6: 'ltr', 1: 'rtl', 5: 'top', 4: 'bottom' }[values[1]];
                     if (!mode) return null;
                     //const fontSize = Number(values[2]) || 25
-                    const fontSize = Math.round((window.screen.height > window.screen.width ? window.screen.width : window.screen.height / 1080) * 30);
+                    const fontSize = Math.round((window.screen.height > window.screen.width ? window.screen.width : window.screen.height / 1080) * 18);
                     const color = `000000${Number(values[2]).toString(16)}`.slice(-6);
                     return {
                         text: $comment.m,
