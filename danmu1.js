@@ -1,3 +1,18 @@
+// ==UserScript==
+// @name         Emby danmaku extension
+// @description  Emby弹幕插件
+// @namespace    https://github.com/RyoLee
+// @author       RyoLee
+// @version      1.11
+// @copyright    2022, RyoLee (https://github.com/RyoLee)
+// @license      MIT; https://raw.githubusercontent.com/RyoLee/emby-danmaku/master/LICENSE
+// @icon         https://github.githubassets.com/pinned-octocat.svg
+// @updateURL    https://cdn.jsdelivr.net/gh/RyoLee/emby-danmaku@gh-pages/ede.user.js
+// @downloadURL  https://cdn.jsdelivr.net/gh/RyoLee/emby-danmaku@gh-pages/ede.user.js
+// @grant        none
+// @match        *://*/web/index.html*
+// ==/UserScript==
+
 (async function () {
     'use strict';
     if (document.querySelector('meta[name="application-name"]').content == 'Emby') {
@@ -5,7 +20,7 @@
         const check_interval = 200;
         const chConverTtitle = ['当前状态: 未启用', '当前状态: 转换为简体', '当前状态: 转换为繁体'];
         // 0:当前状态关闭 1:当前状态打开
-        const danmaku_icons = ['\uE0B9', '\uE7A2'];
+        const danmaku_icons = ['\u2610', '\u2611'];
         const search_icon = '\uE881';
         const translate_icon = '\uE927';
         const info_icon = '\uE0E0';
@@ -202,13 +217,13 @@
             // 手动匹配
             menubar.appendChild(createButton(searchButtonOpts));
             // 简繁转换
-            translateButtonOpts.title = chConverTtitle[window.ede.chConvert];
-            menubar.appendChild(createButton(translateButtonOpts));
+            //translateButtonOpts.title = chConverTtitle[window.ede.chConvert];
+            //menubar.appendChild(createButton(translateButtonOpts));
             // 屏蔽等级
-            filterButtonOpts.innerText = filter_icons[parseInt(window.localStorage.getItem('danmakuFilterLevel') ? window.localStorage.getItem('danmakuFilterLevel') : 0)];
-            menubar.appendChild(createButton(filterButtonOpts));
+            //filterButtonOpts.innerText = filter_icons[parseInt(window.localStorage.getItem('danmakuFilterLevel') ? window.localStorage.getItem('danmakuFilterLevel') : 0)];
+            //menubar.appendChild(createButton(filterButtonOpts));
             // 弹幕信息
-            menubar.appendChild(createButton(infoButtonOpts));
+            //menubar.appendChild(createButton(infoButtonOpts));
             console.log('UI初始化完成');
         }
 
@@ -340,7 +355,7 @@
         }
 
         function getComments(episodeId) {
-            let url = 'https://api.xn--7ovq92diups1e.com/cors/https://api.dandanplay.net/api/v2/comment/' + episodeId + '?withRelated=true&chConvert=' + window.ede.chConvert;
+            let url = 'https://api.9-ch.com/cors/https://api.dandanplay.net/api/v2/comment/' + episodeId + '?withRelated=true&chConvert=' + window.ede.chConvert;
             return fetch(url, {
                 method: 'GET',
                 headers: {
@@ -484,7 +499,7 @@
                     const mode = { 6: 'ltr', 1: 'rtl', 5: 'top', 4: 'bottom' }[values[1]];
                     if (!mode) return null;
                     //const fontSize = Number(values[2]) || 25
-                    const fontSize = Math.round((window.screen.height > window.screen.width ? window.screen.width : window.screen.height / 1080) * 26);
+                    const fontSize = Math.round((window.screen.height > window.screen.width ? window.screen.width : window.screen.height / 1080) * 23);
                     const color = `000000${Number(values[2]).toString(16)}`.slice(-6);
                     return {
                         text: $comment.m,
@@ -499,7 +514,7 @@
                             font: `${fontSize}px sans-serif`,
                             fillStyle: `#${color}`,
                             strokeStyle: color === '000000' ? '#fff' : '#000',
-                            lineWidth: 2.3,
+                            lineWidth: 2.0,
                         },
                     };
                 })
